@@ -13,6 +13,8 @@ html(lang='en', ng-app='fmCases')
     script(src='js/app.js')
 
   body(ng-controller='AppCtrl')
+
+    //landing page
     ons-navigator(ng-cloak, var='navi')
       ons-page
         ons-toolbar
@@ -20,18 +22,6 @@ html(lang='en', ng-app='fmCases')
           .center {{pageTitle}}
           .right
             ons-toolbar-button Label
-        ons-list
-          ons-list-header Hasrt
-          ons-list-item(ng-repeat='item in data', modifier='{{item.modifier}}', ng-click='navi.pushPage(\'nav\')') {{item.text}}
-        ons-bottom-toolbar
-          .bottom-bar__line-height(style='text-align: center;') Bottom toolbar
+        ons-button(ng-click="pushPage(2)") Start FMCases
 
-    ons-template(id='nav')
-      ons-toolbar
-        .left
-          ons-back-button Back
-        .center Page2
-      div(style='text-align: center;')
-          br
-          ons-button(ng-click='navi.popPage()') Pop
-          ons-button(ng-click='navi.pushPage(\'nav\')') Push
+

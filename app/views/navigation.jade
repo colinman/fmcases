@@ -1,0 +1,7 @@
+include includes/topbar.jade
+
+//navigation page template
+ons-list
+  ons-list-item(ng-repeat='item in pageOpt().items', modifier='tappable', ng-click='pushPage(item.navid)') {{item.text}}
+
+include includes/bottombar.jade
