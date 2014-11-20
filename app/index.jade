@@ -1,0 +1,37 @@
+doctype html
+html(lang='en', ng-app='fmCases')
+  head
+    meta(charset='utf-8')
+    meta(name="apple-mobile-web-app-capable" content="yes")
+    meta(name="mobile-web-app-capable" content="yes")
+    title fmCases
+    link(rel='stylesheet', href='styles/app.css')
+    link(rel='stylesheet', href='lib/onsen/css/onsenui.css')
+    link(rel='stylesheet', href='lib/onsen/css/onsen-css-components.css')
+    script(src='lib/onsen/js/angular/angular.js')
+    script(src='lib/onsen/js/onsenui.js')
+    script(src='js/app.js')
+
+  body(ng-controller='AppCtrl')
+    ons-navigator(ng-cloak, var='navi')
+      ons-page
+        ons-toolbar
+          .left
+          .center {{pageTitle}}
+          .right
+            ons-toolbar-button Label
+        ons-list
+          ons-list-header Hasrt
+          ons-list-item(ng-repeat='item in data', modifier='{{item.modifier}}', ng-click='navi.pushPage(\'nav\')') {{item.text}}
+        ons-bottom-toolbar
+          .bottom-bar__line-height(style='text-align: center;') Bottom toolbar
+
+    ons-template(id='nav')
+      ons-toolbar
+        .left
+          ons-back-button Back
+        .center Page2
+      div(style='text-align: center;')
+          br
+          ons-button(ng-click='navi.popPage()') Pop
+          ons-button(ng-click='navi.pushPage(\'nav\')') Push

@@ -29,6 +29,20 @@ var browserSync = require('browser-sync');
 var gulpIf = require('gulp-if');
 var dgeni = require('dgeni');
 var njglobals = require('dgeni-packages/node_modules/nunjucks/src/globals');
+var jade = require('gulp-jade');
+
+////////////////////////////////////////
+// jade
+////////////////////////////////////////
+gulp.task('templates', function() {
+    var YOUR_LOCALS = {};
+
+    gulp.src('./app/*.jade')
+        .pipe(jade({
+	    locals: YOUR_LOCALS
+	}))
+        .pipe(gulp.dest('./dist/'))
+});
 
 ////////////////////////////////////////
 // browser-sync
@@ -287,6 +301,7 @@ gulp.task('compress-project-templates', function() {
 gulp.task('build', function(done) {
   return runSequence(
     'clean',
+    'templates',
     'prepare',
     'minify-js',
     'build-docs',
@@ -307,7 +322,7 @@ gulp.task('default', function() {
 ////////////////////////////////////////
 // serve
 ////////////////////////////////////////
-gulp.task('serve', ['jshint', 'prepare', 'browser-sync'], function() {
+gulp.task('serve', ['jshint', 'templates', 'prepare', 'browser-sync'], function() {
   gulp.watch(['framework/templates/*.tpl'], ['html2js']);
 
   var watched = [
@@ -321,7 +336,7 @@ gulp.task('serve', ['jshint', 'prepare', 'browser-sync'], function() {
 
   gulp.watch(watched, {
     debounceDelay: 400
-  }, ['prepare', 'jshint']);
+  }, ['template', 'prepare', 'jshint']);
 
   // for livereload
   gulp.watch([
