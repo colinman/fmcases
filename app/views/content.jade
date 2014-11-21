@@ -2,6 +2,6 @@ include includes/topbar.jade
 
 //content page template
 ons-page
-  .content {{pageOpt().content}}
+  .content(ng-bind-html='pageOpt().content')
 
 include includes/bottombar.jade

@@ -48,15 +48,11 @@
   app = angular.module('fmCases', ['onsen']);
 
   app.controller('AppCtrl', [
-    '$scope', '$http', function($scope, $http) {
-      var getData, pageMap, serviceMap;
+    '$scope', '$http', '$sce', function($scope, $http, $sce) {
+      var getData, pageMap;
       pageMap = {
         'nav': 'views/navigation.html',
         'content': 'views/content.html'
-      };
-      serviceMap = {
-        'nav': '/navigation/',
-        'content': '/content/'
       };
       getData = function(item, cb) {
         var data, ___iced_passed_deferral, __iced_deferrals, __iced_k;
@@ -68,13 +64,13 @@
               parent: ___iced_passed_deferral,
               filename: "/opt/fmcases/app/js/app.coffee"
             });
-            $http.get(serviceMap[item.pageType] + ("" + item.id)).success(__iced_deferrals.defer({
+            $http.get("/item/" + item.id).success(__iced_deferrals.defer({
               assign_fn: (function() {
                 return function() {
                   return data = arguments[0];
                 };
               })(),
-              lineno: 16
+              lineno: 11
             }));
             __iced_deferrals._fulfill();
           });
@@ -104,12 +100,13 @@
                   return data = arguments[0];
                 };
               })(),
-              lineno: 26
+              lineno: 21
             }));
             __iced_deferrals._fulfill();
           });
         })(this)((function(_this) {
           return function() {
+            data.content = $sce.trustAsHtml(data.content);
             return navi.pushPage(pageMap[item.pageType], data);
           };
         })(this));
