@@ -1,0 +1,18 @@
+.content .title, .content table { font-family: "Trebuchet MS", Helvetica, sans-serif; white-space: pre-wrap; word-wrap: break-word; }
+.content .title { font-weight: bold; font-size: 17pt;}
+.content .title-2 { margin-top: 3%; font-size: 13pt; }
+.content table { font-size: 12pt;}
+.content .row { font-size: 12pt;}
+.content .level-1, .content .level-2, .content .level-3, .content .level-4, .content table { line-height: 160%; margin-left: 8pt; font-weight: normal; }
+.content .level-1 { font-size: 13pt; margin-top: 3%; margin-left: 0pt; clear: both; }
+.content .level-1::before { content: "+\00A0 ";}
+.content .level-2 { font-size: 12pt;}
+.content .level-2::before { content: "-\00A0 ";}
+.content .level-3 { font-size: 12pt; }
+.content .level-3::before { content: '\2002\00A0\00A0';}
+.content .level-4 { font-size: 12pt; }
+.content .one-half { width: 40%; float: left; margin-left: 5%; padding-right: 2.5%; margin-right: 2.5% white-space: pre-wrap; margin-top: 4%; }
+.content .border-right { border-right: 1px solid black; }
+.content .row { width: 100%; clear: both; margin: 15pt 0pt; display: trable;}
+.content .left { float: left; text-align: right; width: 30%;}
+.content .right { float: left; width: 70%;}
