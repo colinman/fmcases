@@ -30,6 +30,7 @@ var gulpIf = require('gulp-if');
 var dgeni = require('dgeni');
 var njglobals = require('dgeni-packages/node_modules/nunjucks/src/globals');
 var jade = require('gulp-jade');
+var server = require('gulp-express');
 
 ////////////////////////////////////////
 // jade
@@ -42,6 +43,24 @@ gulp.task('templates', function() {
 	    locals: YOUR_LOCALS
 	}))
         .pipe(gulp.dest('./dist/'))
+});
+
+////////////////////////////////////////
+// express-js
+////////////////////////////////////////
+gulp.task('server', function () {
+    // Start the server at the beginning of the task
+    server.run({
+	file: 'app.js'
+    });
+
+    // Restart the server when file changes
+    gulp.watch(['app/**/*.html'], server.notify);
+    gulp.watch(['app/styles/**/*.scss'], ['styles:scss']);
+    gulp.watch(['{.tmp,app}/styles/**/*.css'], ['styles:css', server.notify]);
+    gulp.watch(['app/scripts/**/*.js'], ['jshint']);
+    gulp.watch(['app/images/**/*'], server.notify);
+    gulp.watch(['app.js', 'routes/**/*.js'], [server.run]);
 });
 
 ////////////////////////////////////////
@@ -322,7 +341,7 @@ gulp.task('default', function() {
 ////////////////////////////////////////
 // serve
 ////////////////////////////////////////
-gulp.task('serve', ['jshint', 'templates', 'prepare', 'browser-sync'], function() {
+gulp.task('serve', ['jshint', 'templates', 'prepare', 'server'], function() {
   gulp.watch(['framework/templates/*.tpl'], ['html2js']);
 
   var watched = [
@@ -336,15 +355,15 @@ gulp.task('serve', ['jshint', 'templates', 'prepare', 'browser-sync'], function(
 
   gulp.watch(watched, {
     debounceDelay: 400
-  }, ['template', 'prepare', 'jshint']);
+  }, ['templates', 'prepare', 'jshint']);
 
   // for livereload
-  gulp.watch([
-    'app/**/*.{js,css,html}'
-  ]).on('change', function(changedFile) {
-    gulp.src(changedFile.path)
-      .pipe(browserSync.reload({stream: true, once: true}));
-  });
+//  gulp.watch([
+//    'app/**/*.{js,css,html}'
+//  ]).on('change', function(changedFile) {
+//    gulp.src(changedFile.path)
+//      .pipe(browserSync.reload({stream: true, once: true}));
+//  });
 });
 
 ////////////////////////////////////////

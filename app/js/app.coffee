@@ -1,33 +1,33 @@
 app = angular.module 'fmCases', ['onsen']
-app.controller 'AppCtrl', ['$scope', ($scope) ->
 
-  #############
-  getTitle = (id)->
-    'title' + id
+app.controller 'AppCtrl', ['$scope', '$http', ($scope, $http) ->
 
-  getItems = (navid)->
-    [
-      {text: "item 1", navid:1}
-      {text: "item 2", navid:2}
-      {text: "item 3", navid:3}
-      {text: "item 4", navid:4}
-      {text: "item 5", navid:5}
-      {text: "item 6", navid:6}
-      {text: "item 7", navid:7}
-      {text: "item 8", navid:8}
-      {text: "item 9", navid:9}
-    ]
-  #############
+  #mapping of pagetype to pages
+  pageMap =
+    'nav': 'views/navigation.html'
+    'content': 'views/content.html'
+
+  #mapping of pagetype to web service urls
+  serviceMap =
+    'nav': '/navigation/'
+    'content': '/content/'
+
+  #get item data
+  getData = (item, cb) -> #include caching in the future
+    await $http.get(serviceMap[item.pageType] + "#{item.id}").success defer data
+    cb data
 
   #allow for easy access to page options
   $scope.pageOpt = -> navi.getCurrentPage().options
 
   #push page
-  $scope.pushPage = (navid) ->
+  $scope.pushPage = (item) ->
 
-    options =
-      title: getTitle(navid)
-      items: getItems(navid)
+    #push corresponding page
+    await getData item, defer data
+    navi.pushPage pageMap[item.pageType], data
 
-    navi.pushPage 'views/navigation.html', options
+  #allow for pushing root page without any items
+  $scope.pushRoot = ->
+    $scope.pushPage {id: 1, pageType: 'nav'}
 ]
