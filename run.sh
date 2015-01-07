@@ -1,1 +1,1 @@
-node app.js
+node /opt/fmcases/app.js

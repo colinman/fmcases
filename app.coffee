@@ -19,5 +19,5 @@ app.get "/item/:id", (req, res) ->
 
 app.use express.static(path.join(__dirname, 'app'))
 
-port = process.env.PORT || 5000;
+port = process.env.PORT || 4000;
 app.listen port, -> console.log "Listening on #{port}"

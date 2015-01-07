@@ -16,3 +16,6 @@
 .content .row { width: 100%; clear: both; margin: 15pt 0pt; display: trable;}
 .content .left { float: left; text-align: right; width: 30%;}
 .content .right { float: left; width: 70%;}
+.topbar {background-color: #192832;}
+.topbar .navigation-bar__title {color: white;}
+.bottomtext {color: #93AEBE; text-align: right; position: fixed; right: 10px; bottom: 10px;}
