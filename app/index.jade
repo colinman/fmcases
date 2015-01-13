@@ -11,9 +11,12 @@ html(lang='en', ng-app='fmCases')
     link(rel="stylesheet", type="text/css", href="../styles/style.css")
     script(src='lib/onsen/js/angular/angular.js')
     script(src='lib/onsen/js/onsenui.js')
+    script(src='https://rawgithub.com/gsklee/ngStorage/master/ngStorage.js')
+    script(src='https://rawgithub.com/jashkenas/underscore/master/underscore-min.js')
+    script(src='js/services.js')
     script(src='js/app.js')
 
-  body(ng-controller='AppCtrl')
+  body(ng-controller='RootCtrl')
 
     //landing page
     ons-navigator(ng-cloak, var='navi')
@@ -24,3 +27,4 @@ html(lang='en', ng-app='fmCases')
           .right
             ons-toolbar-button Label
         ons-button(ng-click="pushRoot()") Start FMCases
+    .bottomtext FMCases

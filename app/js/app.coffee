@@ -1,29 +1,20 @@
-app = angular.module 'fmCases', ['onsen']
+#split into functionality and not modules since still a small application - will need to add more functional modules as application grows
+app = angular.module 'fmCases', ['onsen', 'services']
 
-app.controller 'AppCtrl', ['$scope', '$http', '$sce', ($scope, $http, $sce) ->
+#main controller
+app.controller 'RootCtrl', ['$scope', '$localStorage', '_', 'pageTypes', 'recents', 'data', 'utilFunctions', '$http', '$sce', ($scope, $localStorage, _, pageTypes, recents, data, utilFunctions, $http, $sce) ->
 
-  #mapping of pagetype to pages
-  pageMap =
-    'nav': 'views/navigation.html'
-    'content': 'views/content.html'
+  $scope.itemTapped = (item) -> $scope.pushPage item
 
-  #get item data
-  getData = (item, cb) -> #include caching in the future
-    await $http.get("/item/#{item.id}").success defer data
-    cb data
-
-  #allow for easy access to page options
-  $scope.pageOpt = -> navi.getCurrentPage().options
-
-  #push page
+  #push page for nav or content items (retrieves data first)
   $scope.pushPage = (item) ->
-
     #push corresponding page
-    await getData item, defer data
-    data.content = $sce.trustAsHtml data.content
-    navi.pushPage pageMap[item.pageType], data
+    await item.loadData defer(), $http, $sce #FIX UGLY DEPENDENCIES LATER
+    recents.add item
+    navi.pushPage pageTypes[item.pageType()], item
 
-  #allow for pushing root page without any items
-  $scope.pushRoot = ->
-    $scope.pushPage {id: 1, pageType: 'nav'}
+  utilFunctions.addMenuFuncs $scope
+  $scope.pushRoot = -> $scope.pushPage data.rootDataItem()
+  $scope.recents = -> recents.getRecents()
+  $scope.pageOpt = -> navi.getCurrentPage().options
 ]

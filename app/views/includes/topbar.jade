@@ -2,3 +2,7 @@ ons-toolbar.topbar
   .left
     ons-back-button Back
   .center {{pageOpt().title}}
+  .right
+    .favorites
+    .recents(ng-click="pushRecents()")
+    .search

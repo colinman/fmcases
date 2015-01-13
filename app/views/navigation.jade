@@ -2,6 +2,9 @@ include includes/topbar.jade
 
 //navigation page template
 ons-list
-  ons-list-item(ng-repeat='item in pageOpt().items', modifier='tappable', ng-click='pushPage(item)') {{item.title}}
+  ons-list-item(ng-repeat='item in pageOpt().items', modifier='tappable', ng-click='itemTapped(item)')
+    {{item.title}}
+    .expandable-content(ng-hide="")
+      | arstanrsteanrosietnarosntaioernstioe
 
 include includes/bottombar.jade

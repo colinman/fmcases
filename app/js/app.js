@@ -45,46 +45,15 @@
   };
   window.__iced_k = window.__iced_k_noop = function() {};
 
-  app = angular.module('fmCases', ['onsen']);
+  app = angular.module('fmCases', ['onsen', 'services']);
 
-  app.controller('AppCtrl', [
-    '$scope', '$http', '$sce', function($scope, $http, $sce) {
-      var getData, pageMap;
-      pageMap = {
-        'nav': 'views/navigation.html',
-        'content': 'views/content.html'
-      };
-      getData = function(item, cb) {
-        var data, ___iced_passed_deferral, __iced_deferrals, __iced_k;
-        __iced_k = __iced_k_noop;
-        ___iced_passed_deferral = iced.findDeferral(arguments);
-        (function(_this) {
-          return (function(__iced_k) {
-            __iced_deferrals = new iced.Deferrals(__iced_k, {
-              parent: ___iced_passed_deferral,
-              filename: "/opt/fmcases/app/js/app.coffee"
-            });
-            $http.get("/item/" + item.id).success(__iced_deferrals.defer({
-              assign_fn: (function() {
-                return function() {
-                  return data = arguments[0];
-                };
-              })(),
-              lineno: 11
-            }));
-            __iced_deferrals._fulfill();
-          });
-        })(this)((function(_this) {
-          return function() {
-            return cb(data);
-          };
-        })(this));
-      };
-      $scope.pageOpt = function() {
-        return navi.getCurrentPage().options;
+  app.controller('RootCtrl', [
+    '$scope', '$localStorage', '_', 'pageTypes', 'recents', 'data', 'utilFunctions', '$http', '$sce', function($scope, $localStorage, _, pageTypes, recents, data, utilFunctions, $http, $sce) {
+      $scope.itemTapped = function(item) {
+        return $scope.pushPage(item);
       };
       $scope.pushPage = function(item) {
-        var data, ___iced_passed_deferral, __iced_deferrals, __iced_k;
+        var ___iced_passed_deferral, __iced_deferrals, __iced_k;
         __iced_k = __iced_k_noop;
         ___iced_passed_deferral = iced.findDeferral(arguments);
         (function(_this) {
@@ -94,28 +63,27 @@
               filename: "/opt/fmcases/app/js/app.coffee",
               funcname: "pushPage"
             });
-            getData(item, __iced_deferrals.defer({
-              assign_fn: (function() {
-                return function() {
-                  return data = arguments[0];
-                };
-              })(),
-              lineno: 21
-            }));
+            item.loadData(__iced_deferrals.defer({
+              lineno: 11
+            }), $http, $sce);
             __iced_deferrals._fulfill();
           });
         })(this)((function(_this) {
           return function() {
-            data.content = $sce.trustAsHtml(data.content);
-            return navi.pushPage(pageMap[item.pageType], data);
+            recents.add(item);
+            return navi.pushPage(pageTypes[item.pageType()], item);
           };
         })(this));
       };
-      return $scope.pushRoot = function() {
-        return $scope.pushPage({
-          id: 1,
-          pageType: 'nav'
-        });
+      utilFunctions.addMenuFuncs($scope);
+      $scope.pushRoot = function() {
+        return $scope.pushPage(data.rootDataItem());
+      };
+      $scope.recents = function() {
+        return recents.getRecents();
+      };
+      return $scope.pageOpt = function() {
+        return navi.getCurrentPage().options;
       };
     }
   ]);

@@ -1,0 +1,6 @@
+include includes/topbar.jade
+
+ons-list
+  ons-list-item(ng-repeat='item in favorites().items', modifier='tappable', ng-click='pushPage(item)') {{Favorites}}
+
+include includes/bottombar.jade

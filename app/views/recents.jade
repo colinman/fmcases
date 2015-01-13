@@ -1,0 +1,6 @@
+include includes/topbar.jade
+
+ons-list
+  ons-list-item(ng-repeat='item in recents()', modifier='tappable', ng-click='pushPage(item)') {{item.title}}
+
+include includes/bottombar.jade

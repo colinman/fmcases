@@ -18,4 +18,9 @@
 .content .right { float: left; width: 70%;}
 .topbar {background-color: #192832;}
 .topbar .navigation-bar__title {color: white;}
-.bottomtext {color: #93AEBE; text-align: right; position: fixed; right: 10px; bottom: 10px;}
+.bottomtext {color: #93AEBE; text-align: right; position: fixed; right: 10pt; bottom: 10pt; z-index: 100}
+.left .toolbar-button--quiet {color: white;}
+.right .favorites, .right .recents, .right .search {height: 25px; width: 25px; background-size: cover; position: absolute; margin: auto; top: 0; bottom: 0;}
+.right .favorites {background-image: url("../images/favorites.png"); right: 10px;}
+.right .recents {background-image: url("../images/recents.png"); right: 45px;}
+.right .search {background-image: url("../images/search.png"); right: 80px;}
