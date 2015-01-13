@@ -1,7 +1,7 @@
 db.items.insert({
     title: "Home", pageType: "nav", id: 1,
     items: [
-	{title: "Cardiology", id: 2, pageType: 'nav'},
+	{title: "Cardiology", id: 2, pageType: 'expand', expandableContent: 'expandexpandexpandexpandexpand'},
 	{title: "Emergency", id: 3, pageType: 'nav'},
 	{title: "Endocrinology", id: 4, pageType: 'nav'},
 	{title: "Gastroenterology", id: 5, pageType: 'nav'},
@@ -10,7 +10,7 @@ db.items.insert({
 	{title: "Infectious Disease", id: 8, pageType: 'nav'},
 	{title: "Nephrology", id: 9, pageType: 'nav'},
 	{title: "Neurology", id: 10, pageType: 'nav'},
-	{title: "Obstetrics", id: 11, pageType: 'nav'},
+	{title: "Obstetrics", id: 11, pageType: 'expand', expandableContent: 'expandexpandexpandexpandexpand'},
 	{title: "Oncology", id: 12, pageType: 'nav'},
 	{title: "Orthopedics", id: 13, pageType: 'nav'},
 	{title: "Otolaryngology (ENT)", id: 14, pageType: 'nav'},

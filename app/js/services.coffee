@@ -1,6 +1,25 @@
 underscore = angular.module 'underscore', []
 underscore.factory '_', -> window._
 
+ngHammer = angular.module 'ngHammer', []
+ngHammer.directive 'ngTap', ['$parse', ($parse) ->
+  compile: ($element, attr) ->
+    fn = $parse attr['ngTap']
+    return (scope, element, attr) ->
+      Hammer(element[0]).on 'tap', (event) ->
+        scope.$apply -> fn scope, {$event: event}
+]
+ngHammer.directive 'ngPress', ['$parse', ($parse) ->
+  compile: ($element, attr) ->
+    fn = $parse attr['ngPress']
+    return (scope, element, attr) ->
+      Hammer(element[0]).on 'press', (event) ->
+        scope.$apply -> fn scope, {$event: event}
+]
+
+#############################################################################
+#####################----SERVICES MODULE----#################################
+#############################################################################
 services = angular.module 'services', ['ngStorage', 'underscore']
 
 #####################----GLOBALS----#################################
@@ -14,24 +33,29 @@ services.value 'pageTypes', {
 
 #####################----DATA----#################################
 class dataItem #not very many shared properties as of now
+  constructor: (@id, @title) ->
+
+class expandItem extends dataItem
+  pageType: -> 'expand'
+  constructor: (@id, @title, @expandableContent) ->
+  showExpandable: false
 
 class contentItem extends dataItem
-  constructor: (@id, @title) ->
   pageType: -> 'content'
   loadData: (cb, $http, $sce) -> #there's not really a better way to deal with this ugly dependency
-    if @content then return cb @content
+    if @content then return cb()
     await $http.get("/item/#{@id}").success defer data
     @content = $sce.trustAsHtml data.content
     cb()
 
 class menuItem extends dataItem
-  constructor: (@id, @title) ->
   pageType: -> 'nav'
   loadData: (cb, $http) -> #there's not really a better way to deal with this ugly dependency
-    if @items then return cb @items
+    if @items then return cb()
     await $http.get("/item/#{@id}").success defer data
-    @items = _.map data.items, (elem) ->
-      if elem.pageType is 'content' then return new contentItem elem.id, elem.title
+    @items = _.map data.items, (elem) -> #element either links to page, content, or is expandable
+      if elem.pageType is 'expand' then return new expandItem elem.id, elem.title, elem.expandableContent
+      else if elem.pageType is 'content' then return new contentItem elem.id, elem.title
       else if elem.pageType is 'nav' then return new menuItem elem.id, elem.title
     cb()
 

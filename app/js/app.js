@@ -45,12 +45,16 @@
   };
   window.__iced_k = window.__iced_k_noop = function() {};
 
-  app = angular.module('fmCases', ['onsen', 'services']);
+  app = angular.module('fmCases', ['onsen', 'services', 'ngHammer']);
 
   app.controller('RootCtrl', [
     '$scope', '$localStorage', '_', 'pageTypes', 'recents', 'data', 'utilFunctions', '$http', '$sce', function($scope, $localStorage, _, pageTypes, recents, data, utilFunctions, $http, $sce) {
       $scope.itemTapped = function(item) {
-        return $scope.pushPage(item);
+        if (item.pageType() === 'expand') {
+          return item.showExpandable = !item.showExpandable;
+        } else {
+          return $scope.pushPage(item);
+        }
       };
       $scope.pushPage = function(item) {
         var ___iced_passed_deferral, __iced_deferrals, __iced_k;
@@ -64,7 +68,7 @@
               funcname: "pushPage"
             });
             item.loadData(__iced_deferrals.defer({
-              lineno: 11
+              lineno: 13
             }), $http, $sce);
             __iced_deferrals._fulfill();
           });
