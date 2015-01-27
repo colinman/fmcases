@@ -1,21 +1,19 @@
 @font-face
   font-family Nimbus Sans Cond
-  src url('')
+  src url('../fonts/nimbuscond.otf')
 @font-face
   font-family Nimbus Sans Cond
-  src url('')
+  src url('../fonts/nimbuscondbold.otf')
   font-weight bold
 .page__background
   background-color white
 .content
+  width 95%
+  margin 10pt auto 10pt auto
   .title, table
-    font-family "Trebuchet MS", Helvetica, sans-serif
+    font-family Nimbus Sans Cond
     white-space prewrap
     word-wrap: break-word
-  .level-1, .level-2, .level-3, .level-4, table
-    margin-left 8pt
-    font-weight normal
-    font-family Nimbus Sans Cond
   table
     font-size 12pt
   .row
@@ -37,24 +35,33 @@
   .title-2
     margin-top 3%
     font-size 13pt
+
+  .level-1, .level-2, .level-3, .level-4
+    margin-left 8pt
+    font-weight normal
+    font-family Nimbus Sans Cond
+    &.expandable::before
+      content "+\00A0\00A0"
+    &.expandable.expanded::before
+      content "-\00A0\00A0"
+    &.emphasis
+      color: #0E70BF
   .level-1
     font-size 16pt
+    color: #47738D
     margin-top 3%
     margin-left 0pt
-    color: #47738D
-    ::before
-      content "+\00A0"
+    &::before
+      content "\2022\00A0"
   .level-2
     font-size 14pt
     color #619DC0
-    ::before
-      content "+\00A0"
   .level-3
-    font-size 12pt
-    ::before
-      content "\2002\+\00A0+\00A0"
+    font-size 13pt
+    color #343C41
   .level-4
-    font-size 12pt
+    font-size 13pt
+
   .one-half
     width 40%
     float left
@@ -65,11 +72,28 @@
     margin-top 4%
   .border-right
     border-right 1px solid black
+ons-list ons-list-item.list__item
+  font-family Nimbus Sans Cond
+  font-size 16pt
+  min-height 0
+  line-height 30pt
+  padding-top 4pt
 .topbar
   background-color #192832
   .navigation-bar__title
+    font-family Nimbus Sans Cond
+    font-size 18pt
+    margin-top 3pt
     color white
+  .navigation-bar__left
+    width 10%
+    .back-button__label
+      display none !important
+  .navigation-bar__title
+    width 61%
+    overflow hidden
 .bottomtext
+  font-family Nimbus Sans Cond
   color #93AEBE
   text-align right
   position fixed
@@ -79,21 +103,21 @@
 .left
   .toolbar-button--quiet
     color white
-  .right
-    .favorites, .recents, .search
-      height 25pt
-      width 25pt
-      background-size cover
-      position absolute
-      margin auto
-      top 0
-      bottom 0
-    .favorites
-      background-image: url("../images/favorites.png")
-      right 10px
-    .recents
-      background-image: url("../images/recents.png")
-      right 45px
-    .search
-      background-image: url("../images/search.png")
-      right 80px
+.right
+  .favorites, .recents, .search
+    height 16pt
+    width 16pt
+    background-size cover
+    position absolute
+    margin auto
+    top 0
+    bottom 0
+  .favorites
+    background-image url("../images/favorites.png")
+    right 10pt
+  .recents
+    background-image url("../images/recents.png")
+    right 33pt
+  .search
+    background-image url("../images/search.png")
+    right 55pt

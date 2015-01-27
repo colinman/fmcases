@@ -17,6 +17,10 @@ html(lang='en', ng-app='fmCases')
     script(src='https://rawgithub.com/jashkenas/underscore/master/underscore-min.js')
     script(src='js/services.js')
     script(src='js/app.js')
+    script(type="text/ons-template", id="recents.html")
+      include views/recents-cacheable.jade
+    script(type="text/ons-template", id="favorites.html")
+      include views/favorites-cacheable.jade
 
   body(ng-controller='RootCtrl')
 

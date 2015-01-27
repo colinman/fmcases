@@ -12,8 +12,8 @@ services.value 'pageTypes', {
   'landing': 'index.html'
   'nav': 'views/navigation.html'
   'content': 'views/content.html'
-  'favorites' : 'views/favorites.html'
-  'recents' : 'views/recents.html'
+  'favorites' : 'favorites.html'
+  'recents' : 'recents.html'
 }
 
 #####################----DATA----#################################
