@@ -1,0 +1,99 @@
+@font-face
+  font-family Nimbus Sans Cond
+  src url('')
+@font-face
+  font-family Nimbus Sans Cond
+  src url('')
+  font-weight bold
+.page__background
+  background-color white
+.content
+  .title, table
+    font-family "Trebuchet MS", Helvetica, sans-serif
+    white-space prewrap
+    word-wrap: break-word
+  .level-1, .level-2, .level-3, .level-4, table
+    margin-left 8pt
+    font-weight normal
+    font-family Nimbus Sans Cond
+  table
+    font-size 12pt
+  .row
+    font-size 12pt
+    width 100%
+    clear both
+    margin 15pt 0pt
+    display table
+  .left
+    float left
+    text-align right
+    width 30%
+  .right
+    float left
+    width 70%
+  .title
+    font-weight bold
+    font-size 17pt
+  .title-2
+    margin-top 3%
+    font-size 13pt
+  .level-1
+    font-size 16pt
+    margin-top 3%
+    margin-left 0pt
+    color: #47738D
+    ::before
+      content "+\00A0"
+  .level-2
+    font-size 14pt
+    color #619DC0
+    ::before
+      content "+\00A0"
+  .level-3
+    font-size 12pt
+    ::before
+      content "\2002\+\00A0+\00A0"
+  .level-4
+    font-size 12pt
+  .one-half
+    width 40%
+    float left
+    margin-left 5%
+    padding-right 2.5%
+    margin-right 2.5%
+    white-space pre-wrap
+    margin-top 4%
+  .border-right
+    border-right 1px solid black
+.topbar
+  background-color #192832
+  .navigation-bar__title
+    color white
+.bottomtext
+  color #93AEBE
+  text-align right
+  position fixed
+  right 10pt
+  bottom 10pt
+  z-index 100
+.left
+  .toolbar-button--quiet
+    color white
+  .right
+    .favorites, .recents, .search
+      height 25pt
+      width 25pt
+      background-size cover
+      position absolute
+      margin auto
+      top 0
+      bottom 0
+    .favorites
+      background-image: url("../images/favorites.png")
+      right 10px
+    .recents
+      background-image: url("../images/recents.png")
+      right 45px
+    .search
+      background-image: url("../images/search.png")
+      right 80px
