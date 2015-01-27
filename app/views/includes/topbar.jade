@@ -3,6 +3,6 @@ ons-toolbar.topbar
     ons-back-button Back
   .center {{pageOpt().title}}
   .right
-    .favorites
-    .recents(ng-click="pushRecents()")
+    .favorites(ng-tap="pushFavorites()")
+    .recents(ng-tap="pushRecents()")
     .search

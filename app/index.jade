@@ -11,13 +11,20 @@ html(lang='en', ng-app='fmCases')
     link(rel="stylesheet", type="text/css", href="../styles/style.css")
     script(src='lib/onsen/js/angular/angular.js')
     script(src='lib/onsen/js/onsenui.js')
-    script(src='http://hammerjs.github.io/dist/hammer.min.js')
+    script(src='https://rawgithub.com/colinman/hammer.js/master/hammer.min.js')
+    script(src='https://rawgithub.com/colinman/ngHammer/master/nghammer.min.js')
     script(src='https://rawgithub.com/gsklee/ngStorage/master/ngStorage.js')
     script(src='https://rawgithub.com/jashkenas/underscore/master/underscore-min.js')
     script(src='js/services.js')
     script(src='js/app.js')
 
   body(ng-controller='RootCtrl')
+
+    script(type="text/ons-template" id="alert.html")
+      ons-alert-dialog(animation="default")
+        .alert-dialog-title {{alertTitle}}
+        .alert-dialog-content {{alertContent}}
+        .alert-dialog-footer
 
     //landing page
     ons-navigator(ng-cloak, var='navi')
