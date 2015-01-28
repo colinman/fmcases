@@ -5,6 +5,10 @@
   font-family Nimbus Sans Cond
   src url('../fonts/nimbuscondbold.otf')
   font-weight bold
+@font-face
+  font-family Nimbus Sans
+  src url('../fonts/nimbusbold.otf')
+  font-weight bold
 .page__background
   background-color white
 .content
@@ -44,15 +48,11 @@
       content "+\00A0\00A0"
     &.expandable.expanded::before
       content "-\00A0\00A0"
-    &.emphasis
-      color: #0E70BF
   .level-1
     font-size 16pt
     color: #47738D
     margin-top 3%
     margin-left 0pt
-    &::before
-      content "\2022\00A0"
   .level-2
     font-size 14pt
     color #619DC0
@@ -61,6 +61,11 @@
     color #343C41
   .level-4
     font-size 13pt
+  .bullet
+    &::before
+      content "\2022\00A0"
+  .emphasis
+    color: #0E70BF
 
   .one-half
     width 40%
@@ -121,3 +126,24 @@ ons-list ons-list-item.list__item
   .search
     background-image url("../images/search.png")
     right 55pt
+.logo
+  background-repeat no-repeat
+  height 230pt
+  width 172pt
+  margin-left auto
+  margin-right auto
+  margin-top 35pt
+  background-image url("../images/logo.png")
+.start-button
+  margin-left auto
+  margin-right auto
+  width 150pt
+  height 35pt
+  line-height 35pt
+  font-family Nimbus Sans
+  font-weight bold
+  text-align center
+  display block
+  font-size 19pt
+  background-color #209CEF
+  border-radius 5pt

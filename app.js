@@ -26,7 +26,7 @@ app.use(stylus.middleware({
   src: __dirname + '/app/styles',
   dest: __dirname + '/app/styles',
   compile: function(str, path) {
-    return stylus(str).set('filename', path);
+    return stylus(str).set('filename', path).set('compress', true).set('include css', true);
   }
 }));
 

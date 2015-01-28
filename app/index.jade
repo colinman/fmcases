@@ -18,9 +18,13 @@ html(lang='en', ng-app='fmCases')
     script(src='js/services.js')
     script(src='js/app.js')
     script(type="text/ons-template", id="recents.html")
-      include views/recents-cacheable.jade
+      include views/recents.jade
     script(type="text/ons-template", id="favorites.html")
-      include views/favorites-cacheable.jade
+      include views/favorites.jade
+    script(type="text/ons-template", id="content.html")
+      include views/content.jade
+    script(type="text/ons-template", id="navigation.html")
+      include views/navigation.jade
 
   body(ng-controller='RootCtrl')
 
@@ -33,10 +37,6 @@ html(lang='en', ng-app='fmCases')
     //landing page
     ons-navigator(ng-cloak, var='navi')
       ons-page
-        ons-toolbar
-          .left
-          .center {{pageTitle}}
-          .right
-            ons-toolbar-button Label
-        ons-button(ng-click="pushRoot()") Start FMCases
+        .logo
+        ons-button.start-button(ng-click="pushRoot()") START
     .bottomtext FMCases
