@@ -26,7 +26,7 @@ db.items.insert
 
 #CARDIOVASCULAR
 db.items.insert
-  id: 20, title: "Cardiovascular", pageType: "nav"
+  id: 2, title: "Cardiovascular", pageType: "nav"
   items: [
   	{id: 20, title: "Hypertension", pageType: 'nav'}
   ]

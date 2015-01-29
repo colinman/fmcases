@@ -90,7 +90,7 @@
   });
 
   db.items.insert({
-    id: 20,
+    id: 2,
     title: "Cardiovascular",
     pageType: "nav",
     items: [
