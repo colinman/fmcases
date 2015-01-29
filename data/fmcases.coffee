@@ -30,7 +30,7 @@ db.items.insert
   ]
 
 db.items.insert
-id: 20, title: "Hypertension", pageType: "nav", items: [
+  id: 20, title: "Hypertension", pageType: "nav", items: [
   	{id: 200, title: "Screening", pageType: "content"}
   	{id: 201, title: "Definition", pageType: "content"}
   	{id: 202, title: "Signs or symptoms", pageType: "content"}

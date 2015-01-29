@@ -102,9 +102,7 @@
     ]
   });
 
-  db.items.insert;
-
-  ({
+  db.items.insert({
     id: 20,
     title: "Hypertension",
     pageType: "nav",
