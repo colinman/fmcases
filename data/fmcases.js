@@ -102,7 +102,9 @@
     ]
   });
 
-  db.items.insert({
+  db.items.insert;
+
+  ({
     id: 20,
     title: "Hypertension",
     pageType: "nav",
@@ -440,7 +442,7 @@
 
   db.items.insert({
     id: 100,
-    title: "Neurological",
+    title: "Headaches",
     pageType: "nav",
     items: [
       {
@@ -482,16 +484,14 @@
   db.items.insert({
     id: 1001,
     title: "Primary headaches",
-    pageType: "content"
-  }, {
+    pageType: "content",
     content: '<div class="title">Primary headaches</div><div class="level-1">The International Headache Society classifies headaches as either primary or secondary. Defining characteristics of primary headaches:</div><table><tr><th></th><th>Migraine</th><th>Tension type</th><th>Cluster</th></tr><tr><td>Severity of pain</td><td>Moderate to severe.</td><td>Mild to moderate.</td><td>Severe.</td></tr><tr><td>Associated symptoms</td><td>Often occur with nausea and vomiting (D), photophobia, or phonophobia. May occur with aura.</td><td>May occur with photophobia or phonophobia.</td><td>Associated with rhinorrhea, lacrimation, facial sweating, miosis, eyelid edema, conjunctival injection, and ptosis.</td></tr><tr><td>Quality of pain</td><td>Pulsating and can be unilateral.</td><td>Pressing, tightening, and bilateral.</td><td>Severe unilateral orbital, periorbital, supraorbital, or temporal pain.</td></tr><tr><td>Aggravating fators</td><td>Worsened with physical activity.</td><td>Typically not worsened with physical activity.</td></tr><tr><td>Duration of symptoms</td><td>Last from 4-72 hours.</td><td>Last from 30 minutes to 7 days.</td><td>Last 15-180 minutes.</td></tr><tr><td>Number of episodes</td><td>5 episodes needed for diagnosis.</td><td>10 episodes needed for diagnosis.</td><td>5 episodes needed for diagnosis.</td></tr></table>'
   });
 
   db.items.insert({
     id: 1002,
     title: "Secondary headaches",
-    pageType: 'nav'
-  }, {
+    pageType: 'nav',
     items: [
       {
         id: 10020,
@@ -522,16 +522,14 @@
   db.items.insert({
     id: 1003,
     title: "Indications for imaaging",
-    pageType: 'content'
-  }, {
+    pageType: 'content',
     content: '<div class="title">Indications for imaging</div><div class="level-1 emphasis">Don&#39;t do imaging for uncomplicated headaches.</div><div class="level-1"> Imaging headache patients absent specific risk factors for structural disease is not likely to change management or improve outcome. Those patients with a significant likelihood of structural disease requiring immediate attention are detected by clinical screens that have been validated in many settings. Many studies and clinical practice guidelines concur. Also, incidental findings lea d to additional medical procedures and expense that do not improve patient well-being.</div><br/><div class="level-1 emphasis">The American Academy of Neurology and the U.S. Headache Consortium guidelines recommend neuroimaging only if:</div><div class="level-2 bullet">The patient has migraine with atypical headache patterns or neurologic signs.</div><div class="level-2 bullet">The patient is at higher risk of a significant abnormality.</div><div class="level-2 bullet">The results of the study would alter the management of the headache.</div><br/><div class="level-1 emphasis">Symptoms that increase the odds of positive neuroimaging results include:</div><div class="level-2 bullet">Rapidly increasing frequency of headache.</div><div class="level-2 bullet">Abrupt onset of severe headache.</div><div class="level-2 bullet">Marked change in headache pattern.</div><div class="level-2 bullet">A history of poor coordination, focal neurologic signs or symptoms, and a headache that awakens the patient from sleep.</div><div class="level-2 bullet">A headache that is worsened with use of Valsalva&#39;s maneuver.</div><div class="level-2 bullet">Persistent headache following head trauma.</div><div class="level-2 bullet">New onset of headache in a person age 35 or over.</div><div class="level-2 bullet">History of cancer or HIV.</div>'
   });
 
   db.items.insert({
     id: 1004,
     title: "Physical exam",
-    pageType: 'nav'
-  }, {
+    pageType: 'nav',
     items: [
       {
         id: 10040,
@@ -548,24 +546,21 @@
   db.items.insert({
     id: 10040,
     title: "Red Flags",
-    pageType: 'content'
-  }, {
+    pageType: 'content',
     content: '<div class="level-1">Red flags</div><div class="level-2 emphasis">Signs of increased intracranial pressure:</div><div class="bullet level-3">Papilledema.</div><div class="bullet level-3">Altered mental status.</div><br/><div class="level-2 emphasis">Signs of meningeal irritation:</div><div class="level-3 bullet">Kernig&#39;s sign: Severe stiffness of the hamstrings causes an inability to straighten the leg when the hip is flexed to 90 degrees.</div><div class="level-3 bullet">Brudzinski&#39;s sign: Severe neck stiffness causes a patient&#39;s hips and knees to flex when the neck is flexed.</div><br/><div class="level-2"><span class="emphasis">Focal neurologic deficits</span> such as unilateral loss of sensation, unilateral weakness, or unilateral hyperreflexia.</div>'
   });
 
   db.items.insert({
     id: 10041,
     title: "Neurological exam",
-    pageType: 'content'
-  }, {
+    pageType: 'content',
     content: '<div class="level-1">Neurological exam</div><div class="level-2">Test cranial nerves II through XII:</div><table><tr><th>Cranial Nerves</th><th>Test</th></tr><tr><td>II and III</td><td>Pupils are equal, round, and reactive to light.</td></tr><tr><td>II</td><td>Test visual fields with confrontation.</td></tr><tr><td>III, IV, and VI</td><td>Extraocular eye movements are intact. Convergence intact.</td></tr><tr><td>V</td><td>Ask patient to close eyes and then ask if the two stimuli feel the same when you lightly touch the right, then left forehead; right, then left cheek; right, then left chin.</td></tr><tr><td>VII</td><td>Observe no facial asymmetry while patient is talking or performing the following maneuvers:<div class="bullet">Raise eyebrows.</div><div class="bullet">Frown.</div><div class="bullet">Close both eyes tightly while you try to open them.</div><div class="bullet">Show both upper and lower teeth.</div><div class="bullet">Smile.</div><div class="bullet">Puff out both cheeks.</div></td></tr><tr><td>VIII</td><td>Rub your fingers near each ear. Hearing is symmetrical and intact.</td></tr><tr><td>XI</td><td>Ask patient to elevate shoulders against resistance. Power equal on both sides.</td></tr><tr><td>IX, X, and XII</td><td>Speech is clear and tongue and palate are midline.</td></tr></table><div class="level-2">Complete the neurologic exam:</div><div class="level-3 bullet"><span class="emphasis">Light touch:</span> Sensation to light touch is normal on all extremities.</div><div class="level-3 bullet"><span class="emphasis">Motor:</span> Power is normal and symmetrical in all extremities. There is no rigidity or clonus. There is a flexor plantar response bilaterally.</div><div class="level-3 bullet"><span class="emphasis">Reflexes:</span> Deep tendon reflexes are 2+ bilaterally.</div><div class="level-3 bullet"><span class="emphasis">Cerebellar exam:</span> You find no finger-to-nose or heel-to-shin ataxia.</div><div class="level-3 bullet"><span class="emphasis">Gait:</span> Assess gait by having the patient walk toward you while walking on  heels, then walk away from you on tiptoes. Then you have the patient walk in tandem, placing one foot directly in front of the other as if walking on a tightrope.</div>'
   });
 
   db.items.insert({
     id: 1005,
     title: "Migraine management",
-    pageType: 'nav'
-  }, {
+    pageType: 'nav',
     items: [
       {
         id: 10051,
@@ -594,8 +589,7 @@
   db.items.insert({
     id: 10051,
     title: "Lifestyle Modifications",
-    pageType: 'content'
-  }, {
+    pageType: 'content',
     content: '<div class="level-1">Lifestyle modifications</div><div class="level-2">1. Headache diary:</div><div class="level-3 bullet">Make note each day of whether or not you have a headache.</div><div class="level-3 bullet">Keep track of the severity of the headaches and which treatments are effective.</div><div class="level-3 bullet">Identify and avoid headache triggers.</div><br/><div class="level-2">2. Caffeine:</div><div class="level-3 bullet">Slowly decrease your use of caffeine products such as coffee, tea, and diet colas.</div><div class="level-3 bullet">Caffeine worsens both migraines and tension type headaches, but coming off of caffeine too quickly may make things worse in the short term.</div><br/><div class="level-2">3. Sleep:</div><div class="level-3 bullet">Try to get more sleep.</div><div class="level-3 bullet">Aim for eight hours each night and establish a regular sleep routine.</div><div class="level-3 bullet">Try to go to sleep at the same time each night.</div>'
   });
 
@@ -689,24 +683,21 @@
   db.items.insert({
     id: 1006,
     title: "Identifying opiate abuse",
-    pageType: 'content'
-  }, {
+    pageType: 'content',
     content: '<div class="title">Identifying opiate abuse</div><div class="level-1 emphasis">Dependence</div><div class="level-2">Syndrome characterized by a maladaptive pattern of opioid use causing clinically significant impairment or distress. Manifested by at least three of the following: tolerance, withdrawal, increasing doses, desire or inability to cut down, significant amount of time spent in search of drug, interference with social, occupational or recreational activities and continued use despite persistent/recurrent physical or psychological problems due to the drug.</div><br/><div class="level-1 emphasis">Addiction</div><div class="level-2">Persistent drug craving, loss of control over drug use, compulsive use, and a strong tendency to relapse after withdrawal.</div><br/><div class="level-1 emphasis">Tolerance</div><div class="level-2">Need for increasing doses of medication to achieve the initial effect of the drug.</div>'
   });
 
   db.items.insert({
     id: 1007,
     title: "Approach to chronic pain",
-    pageType: 'content'
-  }, {
+    pageType: 'content',
     content: '<div class="title">Approach to chronic pain</div><div class="level-1">Most short-acting opiates such as hydrocodone and oxycodone are indicated only for use in acute pain or for breakthrough pain, when long-acting agents are insufficient to control symptoms. These drugs should be used cautiously since they cause side effects like euphoria, hence frequent overuse or diversion for other purposes.</div><br/><div class="level-1">For patients with chronic pain, when non-opiate therapies are not sufficient, it is sometimes appropriate to prescribe low doses of long-acting opioids, along with other agents to improve function.</div><br/><div class="level-1 emphasis">Approach to treatment:</div><div class="level-2 bullet">Set clear goals with patients. Rarely possible to completely relieve pain, so aim to achieve a level of pain the patient feels he/she can live with. Measure with functional goals and numeric assessment of pain level.</div><div class="level-2 bullet">Use non-pharmacologic treatments such as biofeedback, physical therapy, and cognitive behavioral therapy.</div><div class="level-2 bullet">When using medications, first select specifically targeted non-opiate therapies.</div><div class="level-2 bullet">When using opiates, use long-acting agents along with the other agents and use the lowest possible dose that improves patients&#39; function.</div><div class="level-2 bullet">Use a pain medication agreement.</div>'
   });
 
   db.items.insert({
     id: 1008,
     title: "Treatment goal",
-    pageType: 'content'
-  }, {
+    pageType: 'content',
     content: '<div class="title">Treatment goal</div><div class="level-1">Fewer than two headaches per week or eight per month and they are relieved with lifestyle modification and acute treatment medicine. Controlled headaches do not require additional follow-up unless the headaches change or get worse.</div>'
   });
 
