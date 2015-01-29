@@ -848,7 +848,7 @@
     id: 13042,
     title: "Neurological exam",
     pageType: "nav",
-    item: [
+    items: [
       {
         id: 130420,
         title: "Deep Tendon Reflexes",
