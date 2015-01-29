@@ -3,6 +3,6 @@ include includes/topbar.jade
 //navigation page template
 ons-list
   ons-list-item(ng-repeat='item in pageOpt().items', modifier='tappable', ng-tap='itemTapped(item)', ng-press='itemPressed(item)') {{item.title}}
-    .expandable-content(ng-show="item.showExpandable") {{item.expandableContent}}
+    .expandable-content.content(ng-show="item.showExpandable", ng-bind-html="item.expandableContent")
 
 include includes/bottombar.jade
