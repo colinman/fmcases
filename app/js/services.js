@@ -72,11 +72,12 @@ dataItem = (function() {
 expandItem = (function(_super) {
   __extends(expandItem, _super);
 
-  function expandItem(id, title, expandableContent) {
+  function expandItem(id, title, expandableContent, $sce) {
     this.id = id;
     this.title = title;
     this.expandableContent = expandableContent;
     this.pageType = 'expand';
+    this.expandableContent = $sce.trustAsHtml(this.expandableContent);
   }
 
   expandItem.prototype.showExpandable = false;
@@ -112,7 +113,7 @@ contentItem = (function() {
               return data = arguments[0];
             };
           })(),
-          lineno: 29
+          lineno: 31
         }));
         __iced_deferrals._fulfill();
       });
@@ -137,7 +138,7 @@ menuItem = (function(_super) {
     this.pageType = 'nav';
   }
 
-  menuItem.prototype.loadData = function(cb, $http) {
+  menuItem.prototype.loadData = function(cb, $http, $sce) {
     var data, ___iced_passed_deferral, __iced_deferrals, __iced_k;
     __iced_k = __iced_k_noop;
     ___iced_passed_deferral = iced.findDeferral(arguments);
@@ -157,7 +158,7 @@ menuItem = (function(_super) {
               return data = arguments[0];
             };
           })(),
-          lineno: 37
+          lineno: 39
         }));
         __iced_deferrals._fulfill();
       });
@@ -165,7 +166,7 @@ menuItem = (function(_super) {
       return function() {
         _this.items = _.map(data.items, function(elem) {
           if (elem.pageType === 'expand') {
-            return new expandItem(elem.id, elem.title, elem.expandableContent);
+            return new expandItem(elem.id, elem.title, elem.expandableContent, $sce);
           } else if (elem.pageType === 'content') {
             return new contentItem(elem.id, elem.title);
           } else if (elem.pageType === 'nav') {

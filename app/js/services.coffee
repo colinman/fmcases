@@ -20,7 +20,9 @@ services.value 'pageTypes', {
 class dataItem #not very many shared properties as of now
 
 class expandItem extends dataItem
-  constructor: (@id, @title, @expandableContent) -> @pageType = 'expand'
+  constructor: (@id, @title, @expandableContent, $sce) ->
+    @pageType = 'expand'
+    @expandableContent = $sce.trustAsHtml @expandableContent
   showExpandable: false
 
 class contentItem
@@ -33,11 +35,11 @@ class contentItem
 
 class menuItem extends dataItem
   constructor: (@id, @title) -> @pageType = 'nav'
-  loadData: (cb, $http) -> #there's not really a better way to deal with this ugly dependency
+  loadData: (cb, $http, $sce) -> #there's not really a better way to deal with this ugly dependency
     if @items then return cb()
     await $http.get("/item/#{@id}").success defer data
     @items = _.map data.items, (elem) -> #element either links to page, content, or is expandable
-      if elem.pageType is 'expand' then return new expandItem elem.id, elem.title, elem.expandableContent
+      if elem.pageType is 'expand' then return new expandItem elem.id, elem.title, elem.expandableContent, $sce
       else if elem.pageType is 'content'
         return new contentItem elem.id, elem.title
       else if elem.pageType is 'nav' then return new menuItem elem.id, elem.title
