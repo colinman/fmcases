@@ -2,7 +2,7 @@
 app = angular.module 'fmCases', ['onsen', 'services', 'ngHammer']
 
 #main controller
-app.controller 'RootCtrl', ['$scope', '$localStorage', '_', 'pageTypes', 'recents', 'data', 'utilFunctions', '$http', '$sce', 'favorites', ($scope, $localStorage, _, pageTypes, recents, data, utilFunctions, $http, $sce, favorites) ->
+app.controller 'RootCtrl', ['$scope', '$localStorage', '_', 'pageTypes', 'recents', 'data', 'utilFunctions', '$http', '$sce', 'favorites', '$timeout', ($scope, $localStorage, _, pageTypes, recents, data, utilFunctions, $http, $sce, favorites, $timeout) ->
 
   $scope.itemTapped = (item) ->
     if item.pageType is 'expand' then item.showExpandable = !item.showExpandable
@@ -25,21 +25,17 @@ app.controller 'RootCtrl', ['$scope', '$localStorage', '_', 'pageTypes', 'recent
     recents.add item
 
   ##TODO: ABSTRACT OUT TO MAKE CLEANER AND SHIT
-
   $scope.searchResults = []
   $scope.progressText = "Please type a search to begin"
 
   $scope.search = (words) -> #make it a local var later?
     $scope.progressText = "Searching for #{words}"
+    $http.get("/search/#{words}").success (data) ->
+      data = _.map data, (result) ->
+        new contentItem result.id, result.title
+      $scope.searchResults = data
+      $scope.progressText = if data is [] then "No Results Found for #{words}" else "Results Found for #{words}"
 
-    if words.indexOf("heart") > -1
-      $scope.searchResults = [
-        new menuItem 2, "Cardiovascular"
-        new menuItem 20, "Hypertension"
-        new menuItem 206, "Physical exam (heart)"
-      ]
-    else
-      $scope.searchResults = []
 
   utilFunctions.addMenuFuncs $scope
   $scope.pushRoot = -> $scope.pushPage data.rootDataItem()

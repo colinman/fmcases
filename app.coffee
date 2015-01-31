@@ -26,6 +26,11 @@ app.get "/item/:id", (req, res) ->
   if err then return console.log err
   res.send item
 
+app.get "/search/:word", (req, res) ->
+  await schema.items.find {'content': {$regex: ".*#{req.param('word')}.*"}}, {id: 1, title: 1}, defer err, results
+  if err then return console.log err
+  res.send results
+
 app.use express.static(path.join(__dirname, 'app'))
 
 port = process.env.PORT || 4000;
