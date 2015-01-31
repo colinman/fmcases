@@ -14,6 +14,7 @@ services.value 'pageTypes', {
   'content': 'content.html'
   'favorites' : 'favorites.html'
   'recents' : 'recents.html'
+  'search' : 'search.html'
 }
 
 #####################----DATA----#################################
@@ -22,7 +23,7 @@ class dataItem #not very many shared properties as of now
 class expandItem extends dataItem
   constructor: (@id, @title, @expandableContent, $sce) ->
     @pageType = 'expand'
-    @expandableContent = $sce.trustAsHtml @expandableContent
+    if @expandableContent? then @expandableContent = $sce.trustAsHtml @expandableContent.toString()
   showExpandable: false
 
 class contentItem
@@ -53,14 +54,14 @@ services.factory 'data', ['$http', '$sce', ($http, $sce) ->
 
 #####################----LOCAL STORAGE----#################################
 
-objectify = (items) ->
+objectify = (items, $sce) ->
   _.map items, (elem) -> #element either links to page, content, or is expandable
-    if elem.pageType is 'expand' then return new expandItem elem.id, elem.title, elem.expandableContent
+    if elem.pageType is 'expand' then return new expandItem elem.id, elem.title, elem.expandableContent, $sce
     else if elem.pageType is 'content' then return new contentItem elem.id, elem.title
     else if elem.pageType is 'nav' then return new menuItem elem.id, elem.title
 
 #recents factory (using factory instead of service since coffeescript includes oop syntax anyway)
-services.factory 'recents', ['$localStorage', 'data', ($localStorage, data) ->
+services.factory 'recents', ['$localStorage', 'data', '$sce', ($localStorage, data, $sce) ->
   new class recents
     constructor: ->
       if !$localStorage.recents then $localStorage.recents = []
@@ -69,17 +70,17 @@ services.factory 'recents', ['$localStorage', 'data', ($localStorage, data) ->
       if item.id is data.rootDataItem().id then return
       $localStorage.recents = _.reject $localStorage.recents, (i) -> i.id is item.id #remove old entry
       $localStorage.recents.unshift item
-      @_recents = objectify $localStorage.recents
+      @_recents = objectify $localStorage.recents, $sce
     getRecents: ->
       if @_recents then return @_recents
-      return @_recents = objectify $localStorage.recents
+      return @_recents = objectify $localStorage.recents, $sce
     clear: ->
       $localStorage.recents = []
       @_recents = null
 ]
 
 #favorites factory
-services.factory 'favorites', ['$localStorage', 'data', ($localStorage, data) ->
+services.factory 'favorites', ['$localStorage', 'data', '$sce', ($localStorage, data, $sce) ->
   new class favorites
     constructor: ->
       if !$localStorage.favorites then $localStorage.favorites = []
@@ -88,18 +89,17 @@ services.factory 'favorites', ['$localStorage', 'data', ($localStorage, data) ->
       if item.id is data.rootDataItem().id then return
       $localStorage.favorites = _.reject $localStorage.favorites, (i) -> i.id is item.id #remove old entry
       $localStorage.favorites.push item
-      @_favorites = objectify $localStorage.favorites
+      @_favorites = objectify $localStorage.favorites, $sce
     remove: (item) ->
       if item.id is data.rootDataItem().id then return
       $localStorage.favorites = _.reject $localStorage.favorites, (i) -> i.id is item.id #remove old entry
-      @_favorites = objectify $localStorage.favorites
+      @_favorites = objectify $localStorage.favorites, $sce
     exists: (item) ->
-      console.log _.find(@getFavorites(), (fav) -> fav.id is item.id)
       if _.find(@getFavorites(), (fav) -> fav.id is item.id)? then return true
       false
     getFavorites: ->
       if @_favorites then return @_favorites
-      return @_favorites = objectify $localStorage.favorites
+      return @_favorites = objectify $localStorage.favorites, $sce
     clear: ->
       $localStorage.favorites = []
       @_favorites = null
@@ -122,6 +122,11 @@ services.factory 'utilFunctions', ['pageTypes', 'recents', '$timeout', (pageType
         #don't push if page is already favorites
         if navi.getCurrentPage().options.pageType is 'favorites' then return
         navi.pushPage pageTypes['favorites'], {pageType: 'favorites', title: 'Favorites'}
+
+      $scope.pushSearch = ->
+        #don't push if page is already search
+        if navi.getCurrentPage().options.pageType is 'search' then return
+        navi.pushPage pageTypes['search'], {pageType: 'search', title: 'Search'}
 
       $scope.showNotice = (title, message) ->
         $scope.alertTitle = title

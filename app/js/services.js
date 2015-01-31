@@ -59,7 +59,8 @@ services.value('pageTypes', {
   'nav': 'navigation.html',
   'content': 'content.html',
   'favorites': 'favorites.html',
-  'recents': 'recents.html'
+  'recents': 'recents.html',
+  'search': 'search.html'
 });
 
 dataItem = (function() {
@@ -77,7 +78,9 @@ expandItem = (function(_super) {
     this.title = title;
     this.expandableContent = expandableContent;
     this.pageType = 'expand';
-    this.expandableContent = $sce.trustAsHtml(this.expandableContent);
+    if (this.expandableContent != null) {
+      this.expandableContent = $sce.trustAsHtml(this.expandableContent.toString());
+    }
   }
 
   expandItem.prototype.showExpandable = false;
@@ -113,7 +116,7 @@ contentItem = (function() {
               return data = arguments[0];
             };
           })(),
-          lineno: 31
+          lineno: 32
         }));
         __iced_deferrals._fulfill();
       });
@@ -158,7 +161,7 @@ menuItem = (function(_super) {
               return data = arguments[0];
             };
           })(),
-          lineno: 39
+          lineno: 40
         }));
         __iced_deferrals._fulfill();
       });
@@ -198,10 +201,10 @@ services.factory('data', [
   }
 ]);
 
-objectify = function(items) {
+objectify = function(items, $sce) {
   return _.map(items, function(elem) {
     if (elem.pageType === 'expand') {
-      return new expandItem(elem.id, elem.title, elem.expandableContent);
+      return new expandItem(elem.id, elem.title, elem.expandableContent, $sce);
     } else if (elem.pageType === 'content') {
       return new contentItem(elem.id, elem.title);
     } else if (elem.pageType === 'nav') {
@@ -211,7 +214,7 @@ objectify = function(items) {
 };
 
 services.factory('recents', [
-  '$localStorage', 'data', function($localStorage, data) {
+  '$localStorage', 'data', '$sce', function($localStorage, data, $sce) {
     var recents;
     return new (recents = (function() {
       function recents() {
@@ -229,14 +232,14 @@ services.factory('recents', [
           return i.id === item.id;
         });
         $localStorage.recents.unshift(item);
-        return this._recents = objectify($localStorage.recents);
+        return this._recents = objectify($localStorage.recents, $sce);
       };
 
       recents.prototype.getRecents = function() {
         if (this._recents) {
           return this._recents;
         }
-        return this._recents = objectify($localStorage.recents);
+        return this._recents = objectify($localStorage.recents, $sce);
       };
 
       recents.prototype.clear = function() {
@@ -251,7 +254,7 @@ services.factory('recents', [
 ]);
 
 services.factory('favorites', [
-  '$localStorage', 'data', function($localStorage, data) {
+  '$localStorage', 'data', '$sce', function($localStorage, data, $sce) {
     var favorites;
     return new (favorites = (function() {
       function favorites() {
@@ -269,7 +272,7 @@ services.factory('favorites', [
           return i.id === item.id;
         });
         $localStorage.favorites.push(item);
-        return this._favorites = objectify($localStorage.favorites);
+        return this._favorites = objectify($localStorage.favorites, $sce);
       };
 
       favorites.prototype.remove = function(item) {
@@ -279,13 +282,10 @@ services.factory('favorites', [
         $localStorage.favorites = _.reject($localStorage.favorites, function(i) {
           return i.id === item.id;
         });
-        return this._favorites = objectify($localStorage.favorites);
+        return this._favorites = objectify($localStorage.favorites, $sce);
       };
 
       favorites.prototype.exists = function(item) {
-        console.log(_.find(this.getFavorites(), function(fav) {
-          return fav.id === item.id;
-        }));
         if (_.find(this.getFavorites(), function(fav) {
           return fav.id === item.id;
         }) != null) {
@@ -298,7 +298,7 @@ services.factory('favorites', [
         if (this._favorites) {
           return this._favorites;
         }
-        return this._favorites = objectify($localStorage.favorites);
+        return this._favorites = objectify($localStorage.favorites, $sce);
       };
 
       favorites.prototype.clear = function() {
@@ -335,6 +335,15 @@ services.factory('utilFunctions', [
           return navi.pushPage(pageTypes['favorites'], {
             pageType: 'favorites',
             title: 'Favorites'
+          });
+        };
+        $scope.pushSearch = function() {
+          if (navi.getCurrentPage().options.pageType === 'search') {
+            return;
+          }
+          return navi.pushPage(pageTypes['search'], {
+            pageType: 'search',
+            title: 'Search'
           });
         };
         return $scope.showNotice = function(title, message) {

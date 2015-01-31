@@ -9,6 +9,7 @@ app.controller 'RootCtrl', ['$scope', '$localStorage', '_', 'pageTypes', 'recent
     else $scope.pushPage item
 
   $scope.itemPressed = (item) ->
+    if item.pageType is 'expand' then return
     if favorites.exists item
       favorites.remove item
       $scope.showNotice "Favorites Removed", "#{item.title} removed from favorites."
@@ -22,6 +23,23 @@ app.controller 'RootCtrl', ['$scope', '$localStorage', '_', 'pageTypes', 'recent
     await item.loadData defer(), $http, $sce #FIX UGLY DEPENDENCIES LATER
     navi.pushPage pageTypes[item.pageType], item
     recents.add item
+
+  ##TODO: ABSTRACT OUT TO MAKE CLEANER AND SHIT
+
+  $scope.searchResults = []
+  $scope.progressText = "Please type a search to begin"
+
+  $scope.search = (words) -> #make it a local var later?
+    $scope.progressText = "Searching for #{words}"
+
+    if words.indexOf("heart") > -1
+      $scope.searchResults = [
+        new menuItem 2, "Cardiovascular"
+        new menuItem 20, "Hypertension"
+        new menuItem 206, "Physical exam (heart)"
+      ]
+    else
+      $scope.searchResults = []
 
   utilFunctions.addMenuFuncs $scope
   $scope.pushRoot = -> $scope.pushPage data.rootDataItem()

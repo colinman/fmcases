@@ -56,6 +56,9 @@ app.controller('RootCtrl', [
       }
     };
     $scope.itemPressed = function(item) {
+      if (item.pageType === 'expand') {
+        return;
+      }
       if (favorites.exists(item)) {
         favorites.remove(item);
         return $scope.showNotice("Favorites Removed", "" + item.title + " removed from favorites.");
@@ -76,7 +79,7 @@ app.controller('RootCtrl', [
             funcname: "pushPage"
           });
           item.loadData(__iced_deferrals.defer({
-            lineno: 21
+            lineno: 22
           }), $http, $sce);
           __iced_deferrals._fulfill();
         });
@@ -86,6 +89,16 @@ app.controller('RootCtrl', [
           return recents.add(item);
         };
       })(this));
+    };
+    $scope.searchResults = [];
+    $scope.progressText = "Please type a search to begin";
+    $scope.search = function(words) {
+      $scope.progressText = "Searching for " + words;
+      if (words.indexOf("heart") > -1) {
+        return $scope.searchResults = [new menuItem(2, "Cardiovascular"), new menuItem(20, "Hypertension"), new menuItem(206, "Physical exam (heart)")];
+      } else {
+        return $scope.searchResults = [];
+      }
     };
     utilFunctions.addMenuFuncs($scope);
     $scope.pushRoot = function() {
