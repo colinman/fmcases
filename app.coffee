@@ -4,6 +4,7 @@ app = module.exports.app = exports.app = express()
 mongoose = require 'mongoose'
 schema = require './lib/schema.js'
 stylus = require 'stylus'
+_ = require 'underscore'
 
 mongoose.connect 'mongodb://localhost/fmcases'
 db = mongoose.connection
@@ -26,10 +27,48 @@ app.get "/item/:id", (req, res) ->
   if err then return console.log err
   res.send item
 
+# characters that form boundaries
+ignoreRegex = "[^A-z]"
+
+String.prototype.insert = (index, str) ->
+  this.substring(0, index) + str + this.substring(index, this.length);
+
+# TODO: move this somewhere else
+truncate = (content, word) ->
+
+  # "constants"
+  leading = 15
+  trailing = 10 + word.length
+
+  # clean content of html (imperfect spacing)
+  content = content.replace /<(?:.|\n)*?>/gm, ' '
+
+  # regex through and find + truncate
+  regex = new RegExp "#{ignoreRegex}#{word}", 'g'
+  output = ""
+
+  results = regex.exec content
+  while results
+
+    # highlight keyword
+    fragment = content.substring results.index - leading, results.index + trailing
+    fragment = fragment.insert leading + word.length + 1, '</b>'
+    fragment = fragment.insert leading + 1, '<b>'
+
+    output += "..." + fragment
+    results = regex.exec content
+
+  output.replace /\s+/g, ' '
+
+app.get "/search", (req, res) -> res.send []  
+
 app.get "/search/:word", (req, res) ->
-  await schema.items.find {'content': {$regex: ".*#{req.param('word')}.*"}}, {id: 1, title: 1}, defer err, results
-  if err then return console.log err
-  res.send results
+  word = req.param('word')
+  regexStr = "#{ignoreRegex}#{word}"
+  await schema.items.find {'content': {$regex: regexStr}}, {id: 1, title: 1, content:1}, defer err, results
+  if err then return console.log err  
+  results = _.each results, (r) -> r.content = truncate(r.content, word)
+  res.send(_.reject results, (r) -> r.content is '')
 
 app.use express.static(path.join(__dirname, 'app'))
 

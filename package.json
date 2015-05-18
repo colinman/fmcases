@@ -27,6 +27,7 @@
     "dgeni": "^0.3.0",
     "dgeni-packages": "^0.9.3",
     "event-stream": "~3.1.0",
+    "express": "^4.12.3",
     "gulp": "^3.8.7",
     "gulp-autoprefixer": "0.0.6",
     "gulp-cached": "0.0.3",
@@ -48,12 +49,16 @@
     "gulp-uglify": "^0.3.1",
     "gulp-util": "~2.2.14",
     "gulp-zip": "^0.4.0",
+    "iced-coffee-script": "^1.8.0-d",
+    "iced-runtime": "^1.0.2",
     "jshint-stylish": "^0.4.0",
     "lodash": "^2.4.1",
     "mongoose": "3.8.19",
     "prompt": "*",
     "run-sequence": "~0.3.6",
+    "stylus": "^0.51.1",
     "topdoc": "~0.4.0",
-    "topdoc-theme": "~0.2.7"
+    "topdoc-theme": "~0.2.7",
+    "underscore": "^1.8.3"
   }
 }

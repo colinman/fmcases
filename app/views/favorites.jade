@@ -1,0 +1,7 @@
+include includes/topbar.jade
+
+ons-list
+  ons-list-item(ng-repeat='item in favorites()', modifier='tappable', ng-tap='itemTapped(item)', ng-press='itemPressed(item)') {{item.title}}
+    .expandable-content(ng-show="item.showExpandable") {{item.expandableContent}}
+      
+include includes/bottombar.jade

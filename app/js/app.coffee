@@ -26,15 +26,17 @@ app.controller 'RootCtrl', ['$scope', '$localStorage', '_', 'pageTypes', 'recent
 
   ##TODO: ABSTRACT OUT TO MAKE CLEANER AND SHIT
   $scope.searchResults = []
-  $scope.progressText = "Please type a search to begin"
 
   $scope.search = (words) -> #make it a local var later?
-    $scope.progressText = "Searching for #{words}"
+    if !words or words is ''
+      $scope.progressText = null
+      $scope.searchResults = null
+      return
     $http.get("/search/#{words}").success (data) ->
       data = _.map data, (result) ->
-        new contentItem result.id, result.title
+        new detailItem result.id, result.title, result.content, $sce
       $scope.searchResults = data
-      $scope.progressText = if data is [] then "No Results Found for #{words}" else "Results Found for #{words}"
+      $scope.progressText = if data is [] then "No results found for #{words}" else "Results found for #{words}"
 
 
   utilFunctions.addMenuFuncs $scope

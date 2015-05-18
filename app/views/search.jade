@@ -1,0 +1,11 @@
+include includes/topbar.jade
+
+ons-list
+  textarea.search-bar(rows="1", placeholder="Search...", ng-model="searchWords", ng-change="search(searchWords)")
+  ons-list-item.search-progress(ng-hide='progressText') Please type a search to begin
+  ons-list-item.search-progress(ng-show='progressText') {{progressText}}
+  ons-list-item(ng-repeat="item in searchResults", modifier="tappable", ng-tap="itemTapped(item)", ng-press="itemPressed(item)", ng-show="searchResults") {{item.title}}
+    .detail-content.content(ng-show="item.detailContent", ng-bind-html="item.detailContent")  
+    .expandable-content(ng-show="item.showExpandable") {{item.expandableContent}}
+    
+include includes/bottombar.jade
