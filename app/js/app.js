@@ -44,7 +44,7 @@ iced = {
 };
 __iced_k = __iced_k_noop = function() {};
 
-app = angular.module('fmCases', ['onsen', 'services', 'ngHammer']);
+app = angular.module('fmCases', ['onsen', 'services', 'ngHammer', 'ng-autofocus']);
 
 app.controller('RootCtrl', [
   '$scope', '$localStorage', '_', 'pageTypes', 'recents', 'data', 'utilFunctions', '$http', '$sce', 'favorites', '$timeout', function($scope, $localStorage, _, pageTypes, recents, data, utilFunctions, $http, $sce, favorites, $timeout) {

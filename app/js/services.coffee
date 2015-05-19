@@ -131,8 +131,18 @@ services.factory 'utilFunctions', ['pageTypes', 'recents', '$timeout', (pageType
       $scope.pushSearch = ->
         #don't push if page is already search
         if navi.getCurrentPage().options.pageType is 'search' then return
+        $scope.progressText = null          
+        $scope.searchResults = null
         navi.pushPage pageTypes['search'], {pageType: 'search', title: 'Search'}
 
+      $scope.showSearch = ->
+        #don't push if page is already search
+        if navi.getCurrentPage().options.pageType is 'search' then return
+        $scope.searchlink = null # TODO: AWFUL STYLE
+        $scope.progressText = null          
+        $scope.searchResults = null
+        navi.pushPage pageTypes['search'], {pageType: 'search', title: 'Search', animation: 'none'}
+                
       $scope.showNotice = (title, message) ->
         $scope.alertTitle = title
         $scope.alertContent = message

@@ -358,9 +358,24 @@ services.factory('utilFunctions', [
           if (navi.getCurrentPage().options.pageType === 'search') {
             return;
           }
+          $scope.progressText = null;
+          $scope.searchResults = null;
           return navi.pushPage(pageTypes['search'], {
             pageType: 'search',
             title: 'Search'
+          });
+        };
+        $scope.showSearch = function() {
+          if (navi.getCurrentPage().options.pageType === 'search') {
+            return;
+          }
+          $scope.searchlink = null;
+          $scope.progressText = null;
+          $scope.searchResults = null;
+          return navi.pushPage(pageTypes['search'], {
+            pageType: 'search',
+            title: 'Search',
+            animation: 'none'
           });
         };
         return $scope.showNotice = function(title, message) {

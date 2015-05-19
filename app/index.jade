@@ -17,6 +17,7 @@ html(lang='en', ng-app='fmCases')
     script(src='https://rawgithub.com/jashkenas/underscore/master/underscore-min.js')
     script(src='js/services.js')
     script(src='js/app.js')
+    script(src='lib/ng-autofocus.js')
     script(type="text/ons-template", id="recents.html")
       include views/recents.jade
     script(type="text/ons-template", id="favorites.html")
@@ -40,5 +41,7 @@ html(lang='en', ng-app='fmCases')
     ons-navigator(ng-cloak, var='navi')
       ons-page
         .logo
-        ons-button.start-button(ng-click="pushRoot()") START
+        textarea.search-bar-main(rows="1", placeholder="Search...", ng-click="showSearch()", ng-model='searchlink')        
+        ons-button.start-button(ng-click="pushRoot()") BROWSE
+
     .bottomtext FMCases

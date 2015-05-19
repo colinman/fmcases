@@ -41,10 +41,10 @@ truncate = (content, word) ->
   trailing = 10 + word.length
 
   # clean content of html (imperfect spacing)
-  content = content.replace /<(?:.|\n)*?>/gm, ' '
+  content = content.replace /<(?:.|\n)*?>/gmi, ' '
 
   # regex through and find + truncate
-  regex = new RegExp "#{ignoreRegex}#{word}", 'g'
+  regex = new RegExp "#{ignoreRegex}#{word}", 'gi'
   output = ""
 
   results = regex.exec content
@@ -64,8 +64,8 @@ app.get "/search", (req, res) -> res.send []
 
 app.get "/search/:word", (req, res) ->
   word = req.param('word')
-  regexStr = "#{ignoreRegex}#{word}"
-  await schema.items.find {'content': {$regex: regexStr}}, {id: 1, title: 1, content:1}, defer err, results
+  regex = new RegExp "#{ignoreRegex}#{word}", 'gi'
+  await schema.items.find {'content': {$regex: regex}}, {id: 1, title: 1, content:1}, defer err, results
   if err then return console.log err  
   results = _.each results, (r) -> r.content = truncate(r.content, word)
   res.send(_.reject results, (r) -> r.content is '')

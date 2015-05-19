@@ -1,5 +1,5 @@
 #split into functionality and not modules since still a small application - will need to add more functional modules as application grows
-app = angular.module 'fmCases', ['onsen', 'services', 'ngHammer']
+app = angular.module 'fmCases', ['onsen', 'services', 'ngHammer', 'ng-autofocus']
 
 #main controller
 app.controller 'RootCtrl', ['$scope', '$localStorage', '_', 'pageTypes', 'recents', 'data', 'utilFunctions', '$http', '$sce', 'favorites', '$timeout', ($scope, $localStorage, _, pageTypes, recents, data, utilFunctions, $http, $sce, favorites, $timeout) ->
