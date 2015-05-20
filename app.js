@@ -87,6 +87,9 @@
     output = "";
     results = regex.exec(content);
     while (results) {
+      if (count > 5) {
+        break;
+      }
       count++;
       fragment = content.substring(results.index - leading, results.index + trailing);
       fragment = fragment.insert(leading + word.length + 1, '</b>');
@@ -94,11 +97,7 @@
       output += "..." + fragment;
       results = regex.exec(content);
     }
-    return {
-      value: output.replace(/\s+/g, ' ', {
-        count: count
-      })
-    };
+    return [output.replace(/\s+/g, ' '), count];
   };
 
   app.get("/search", function(req, res) {
@@ -125,14 +124,14 @@
           id: 1,
           title: 1,
           content: 1
-        }, __iced_deferrals.defer({
+        }).lean().exec(__iced_deferrals.defer({
           assign_fn: (function() {
             return function() {
               err = arguments[0];
               return results = arguments[1];
             };
           })(),
-          lineno: 72
+          lineno: 74
         }));
         __iced_deferrals._fulfill();
       });
@@ -142,7 +141,8 @@
           return console.log(err);
         }
         results = _.each(results, function(r) {
-          return r.content = truncate(r.content, word);
+          var _ref;
+          return _ref = truncate(r.content, word), r.content = _ref[0], r.count = _ref[1], _ref;
         });
         return res.send(_.reject(results, function(r) {
           return r.content === '';
