@@ -36,6 +36,9 @@ String.prototype.insert = (index, str) ->
 # TODO: move this somewhere else
 truncate = (content, word) ->
 
+  # num occurrences
+  count = 0
+  
   # "constants"
   leading = 15
   trailing = 10 + word.length
@@ -50,6 +53,10 @@ truncate = (content, word) ->
   results = regex.exec content
   while results
 
+    if count > 5 then break
+    
+    count++
+    
     # highlight keyword
     fragment = content.substring results.index - leading, results.index + trailing
     fragment = fragment.insert leading + word.length + 1, '</b>'
@@ -58,16 +65,16 @@ truncate = (content, word) ->
     output += "..." + fragment
     results = regex.exec content
 
-  output.replace /\s+/g, ' '
+  [output.replace(/\s+/g, ' '), count]
 
 app.get "/search", (req, res) -> res.send []  
 
 app.get "/search/:word", (req, res) ->
   word = req.param('word')
   regex = new RegExp "#{ignoreRegex}#{word}", 'gi'
-  await schema.items.find {'content': {$regex: regex}}, {id: 1, title: 1, content:1}, defer err, results
-  if err then return console.log err  
-  results = _.each results, (r) -> r.content = truncate(r.content, word)
+  await schema.items.find({'content': {$regex: regex}}, {id: 1, title: 1, content:1}).lean().exec defer err, results
+  if err then return console.log err
+  results = _.each results, (r) -> [r.content, r.count] = truncate r.content, word
   res.send(_.reject results, (r) -> r.content is '')
 
 app.use express.static(path.join(__dirname, 'app'))

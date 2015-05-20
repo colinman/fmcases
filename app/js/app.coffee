@@ -33,6 +33,7 @@ app.controller 'RootCtrl', ['$scope', '$localStorage', '_', 'pageTypes', 'recent
       $scope.searchResults = null
       return
     $http.get("/search/#{words}").success (data) ->
+      data = _.sortBy(data, 'count').reverse()
       data = _.map data, (result) ->
         new detailItem result.id, result.title, result.content, $sce
       $scope.searchResults = data

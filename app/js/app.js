@@ -98,6 +98,7 @@ app.controller('RootCtrl', [
         return;
       }
       return $http.get("/search/" + words).success(function(data) {
+        data = _.sortBy(data, 'count').reverse();
         data = _.map(data, function(result) {
           return new detailItem(result.id, result.title, result.content, $sce);
         });

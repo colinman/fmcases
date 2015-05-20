@@ -78,7 +78,8 @@
   };
 
   truncate = function(content, word) {
-    var fragment, leading, output, regex, results, trailing;
+    var count, fragment, leading, output, regex, results, trailing;
+    count = 0;
     leading = 15;
     trailing = 10 + word.length;
     content = content.replace(/<(?:.|\n)*?>/gmi, ' ');
@@ -86,13 +87,18 @@
     output = "";
     results = regex.exec(content);
     while (results) {
+      count++;
       fragment = content.substring(results.index - leading, results.index + trailing);
       fragment = fragment.insert(leading + word.length + 1, '</b>');
       fragment = fragment.insert(leading + 1, '<b>');
       output += "..." + fragment;
       results = regex.exec(content);
     }
-    return output.replace(/\s+/g, ' ');
+    return {
+      value: output.replace(/\s+/g, ' ', {
+        count: count
+      })
+    };
   };
 
   app.get("/search", function(req, res) {
@@ -126,7 +132,7 @@
               return results = arguments[1];
             };
           })(),
-          lineno: 67
+          lineno: 72
         }));
         __iced_deferrals._fulfill();
       });
