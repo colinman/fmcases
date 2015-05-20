@@ -79,5 +79,5 @@ app.get "/search/:word", (req, res) ->
 
 app.use express.static(path.join(__dirname, 'app'))
 
-port = process.env.PORT || 4000;
+port = process.env.PORT || 80;
 app.listen port, -> console.log "Listening on #{port}"

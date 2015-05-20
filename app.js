@@ -153,7 +153,7 @@
 
   app.use(express["static"](path.join(__dirname, 'app')));
 
-  port = process.env.PORT || 4000;
+  port = process.env.PORT || 80;
 
   app.listen(port, function() {
     return console.log("Listening on " + port);
